@@ -1,0 +1,85 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{multicol}
+\usepackage{parskip}
+\usepackage{enumitem}
+\setlist{nosep}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{kubectl Cheat Sheet}}
+\end{center}
+
+\begin{multicols}{3}
+\section*{Basic Commands}
+\begin{itemize}
+    \item \texttt{kubectl version} \\
+    Show client and server versions.
+    \item \texttt{kubectl cluster-info} \\
+    Display cluster info.
+    \item \texttt{kubectl get nodes} \\
+    List all nodes.
+    \item \texttt{kubectl get pods} \\
+    List all pods in current namespace.
+    \item \texttt{kubectl get pods -A} \\
+    List all pods in all namespaces.
+    \item \texttt{kubectl describe pod <pod>} \\
+    Show details of a pod.
+\end{itemize}
+
+\section*{Resource Management}
+\begin{itemize}
+    \item \texttt{kubectl create -f <file>.yaml} \\
+    Create resource from file.
+    \item \texttt{kubectl apply -f <file>.yaml} \\
+    Apply changes from file.
+    \item \texttt{kubectl delete -f <file>.yaml} \\
+    Delete resource from file.
+    \item \texttt{kubectl edit <resource>/<name>} \\
+    Edit resource in place.
+    \item \texttt{kubectl scale deployment <name> --replicas=3} \\
+    Scale deployment.
+    \item \texttt{kubectl rollout restart deployment <name>} \\
+    Restart a deployment
+\end{itemize}
+
+\section*{Logs \& Exec}
+\begin{itemize}
+    \item \texttt{kubectl logs <pod>} \\
+    Show pod logs.
+    \item \texttt{kubectl logs -f <pod>} \\
+    Follow pod logs.
+    \item \texttt{kubectl exec -it <pod> -- /bin/sh} \\
+    Exec into pod.
+    \item \texttt{kubectl port-forward <pod> 8080:80} \\
+    Forward port.
+\end{itemize}
+
+\section*{Namespaces}
+\begin{itemize}
+    \item \texttt{kubectl get ns} \\
+    List namespaces.
+    \item \texttt{kubectl config set-context --current --namespace=<ns>} \\
+    Set default namespace.
+\end{itemize}
+
+\section*{Useful Switches}
+\begin{itemize}
+    \item \texttt{-n <namespace>} \\
+    Specify namespace.
+    \item \texttt{-o yaml} \\
+    Output as YAML.
+    \item \texttt{-o json} \\
+    Output as JSON.
+    \item \texttt{-o wide} \\
+    More info in output.
+    \item \texttt{-A} \texttt{|} \texttt{--all-namepsaces}\\
+    All namespaces.
+\end{itemize}
+
+\end{multicols}
+
+\end{document}xw
