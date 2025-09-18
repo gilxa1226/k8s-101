@@ -1,10 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: ReplicaSet
 metadata:
-  name: frontend-deployment
+  name: frontend-replicaset
   namespace: kubernetes-101
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: frontend
@@ -13,12 +13,28 @@ spec:
       labels:
         app: frontend
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: frontend
-          image: frontend:latest
+          image: gilxa1226/frontend:1.0.0
           ports:
             - containerPort: 3000
-
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+              ephemeral-storage: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+          envFrom:
+            - configMapRef:
+                name: frontend-config
+      volumes:
+        - name: frontend-config
+          configMap:
+            name: frontend-config
 ---
 apiVersion: v1
 kind: Service

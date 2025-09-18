@@ -21,12 +21,27 @@ clean-docs:
 
 build-frontend-container:
 	@cd frontend && \
-	GIT_HASH=$$(git rev-parse --short HEAD) && \
-	docker build -t frontend:$$GIT_HASH .
+	read -p "Enter frontend tag name: " TAG && \
+	docker build -t frontend:$$TAG .
 
 .PHONY: build-backend-container
 
 build-backend-container:
 	@cd backend && \
-	GIT_HASH=$$(git rev-parse --short HEAD) && \
-	./mvnw clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.group= -Dquarkus.container-image.name=backend -Dquarkus.container-image.tag=$$GIT_HASH
+	read -p "Enter backend tag name: " TAG && \
+	./mvnw clean package -Dquarkus.container-image.build=true -Dquarkus.container-image.group= -Dquarkus.container-image.name=backend -Dquarkus.container-image.tag=$$TAG
+
+# Build both frontend and backend containers
+.PHONY: build-containers
+build-containers: build-frontend-container build-backend-container
+
+# Push both frontend and backend containers to Docker Hub
+.PHONY: push-containers
+push-containers:
+	docker login
+	@read -p "Enter Docker Hub username: " USERNAME; \
+	read -p "Enter tag name: " TAG; \
+	docker tag frontend:$$TAG $$USERNAME/frontend:$$TAG; \
+	docker tag backend:$$TAG $$USERNAME/backend:$$TAG; \
+	docker push $$USERNAME/frontend:$$TAG; \
+	docker push $$USERNAME/backend:$$TAG

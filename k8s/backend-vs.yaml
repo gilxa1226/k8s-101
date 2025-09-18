@@ -1,16 +1,16 @@
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: frontend
+  name: backend
   namespace: kubernetes-101
 spec:
   hosts:
-    - frontend.127.0.0.1.xip.io
+    - backend.127.0.0.1.xip.io
   gateways:
     - frontend-gateway
   http:
     - route:
         - destination:
-            host: frontend
+            host: backend
             port:
-              number: 3000
+              number: 8080

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: kubernetes-101
+data:
+  application.properties: |
+    quarkus.http.port=8080
+    quarkus.http.cors=true
+    quarkus.http.cors.origins=http://localhost:3000,http://frontend-service:3000,http://frontend.127.0.0.1.xip.io
+    %prod.quarkus.datasource.jdbc.url=jdbc:postgresql://postgres:5432/links
+    quarkus.datasource.db-kind = postgresql
+    quarkus.hibernate-orm.database.generation=drop-and-create

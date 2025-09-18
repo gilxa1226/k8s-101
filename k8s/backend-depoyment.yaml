@@ -13,11 +13,38 @@ spec:
       labels:
         app: backend
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: backend
-          image: backend:latest
+          image: gilxa1226/backend:1.0.0
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: config-volume
+              mountPath: /deployments/config/application.properties
+              subPath: application.properties
+          envFrom:
+            - secretRef:
+                name: backend-secret
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+              ephemeral-storage: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+              ephemeral-storage: "1Gi"
+      volumes:
+        - name: config-volume
+          configMap:
+            name: backend-config
+            items:
+              - key: application.properties
+                path: application.properties
+        - name: secret-volume
+          secret:
+            secretName: backend-secret
 ---
 apiVersion: v1
 kind: Service
