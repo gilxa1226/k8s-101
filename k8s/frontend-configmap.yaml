@@ -4,5 +4,5 @@ metadata:
   name: frontend-config
   namespace: kubernetes-101
 data:
-  NEXT_PUBLIC_API_URL: "http://localhost:8080"
+  NEXT_PUBLIC_API_URL: "http://backend.127.0.0.1.nip.io"
   

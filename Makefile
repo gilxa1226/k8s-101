@@ -45,3 +45,16 @@ push-containers:
 	docker tag backend:$$TAG $$USERNAME/backend:$$TAG; \
 	docker push $$USERNAME/frontend:$$TAG; \
 	docker push $$USERNAME/backend:$$TAG
+
+# Start Minikube with ingress and dashboard addons enabled
+.PHONY: start-minikube
+start-minikube:
+	minikube start --addons ingress,dashboard,metrics-server
+
+.PHONY: stop-minikube
+stop-minikube:
+	minikube stop
+
+.PHONY: delete-minikube
+delete-minikube:
+	minikube delete
