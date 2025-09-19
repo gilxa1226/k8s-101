@@ -4,6 +4,7 @@ metadata:
   name: backend-ingress
   namespace: kubernetes-101
 spec:
+  ingressClassName: nginx
   rules:
     - host: backend.127.0.0.1.nip.io
       http:
